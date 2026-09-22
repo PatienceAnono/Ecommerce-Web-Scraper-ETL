@@ -28,3 +28,8 @@ Thumbs.db
 
 # VS Code
 .vscode/
+
+# Scraped/generated data
+data/raw/
+data/processed/
+data/*.db
