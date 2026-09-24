@@ -314,6 +314,22 @@ and transforms the scraped catalogue data into an interactive business intellige
 
 The dashboard demonstrates how scraped web data can move beyond extraction and storage into **interactive product, pricing, and inventory analysis**.
 
+### Dashboard Preview
+
+The three Power BI pages provide an interactive view of the scraped product catalogue across catalogue performance, pricing, and inventory availability.
+
+#### Catalogue Overview
+
+![Catalogue Overview](dashboard/screenshots/catalogue-overview.png)
+
+#### Pricing & Product Analysis
+
+![Pricing & Product Analysis](dashboard/screenshots/pricing-product-analysis.png)
+
+#### Inventory & Availability
+
+![Inventory & Availability](dashboard/screenshots/inventory-availability.png)
+
 ### Power BI Project
 
 The Power BI report is stored as a `.pbip` project so that the dashboard structure and semantic model can be version-controlled alongside the ETL pipeline.
