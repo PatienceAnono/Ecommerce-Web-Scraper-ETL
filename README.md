@@ -1,6 +1,6 @@
 # E-commerce Web Scraper & ETL Pipeline
 
-An end-to-end data engineering and analytics portfolio project that extracts product data from an e-commerce website, transforms and validates the dataset, stores it in SQLite and prepares it for SQL analysis and business insights.
+An end-to-end data engineering and analytics portfolio project that extracts product data from an e-commerce website, transforms and validates the dataset, stores it in SQLite, and prepares it for SQL analysis, exploratory analysis, and interactive business intelligence reporting.
 
 > **Source:** 
 >
@@ -16,8 +16,8 @@ The pipeline collects product and product-detail information from 50 catalogue p
 
 ```text
 Books to Scrape
-      │
-      ▼
+       │
+       ▼
 ┌───────────────┐
 │    EXTRACT    │
 │  Python +     │
@@ -26,7 +26,7 @@ Books to Scrape
 └───────┬───────┘
         │
         ▼
-  Raw CSV Dataset
+   Raw CSV Dataset
         │
         ▼
 ┌───────────────┐
@@ -37,7 +37,7 @@ Books to Scrape
 └───────┬───────┘
         │
         ▼
- Clean CSV Dataset
+  Clean CSV Dataset
         │
         ▼
 ┌───────────────┐
@@ -46,11 +46,13 @@ Books to Scrape
 └───────┬───────┘
         │
         ▼
-   books.db
+     books.db
         │
         ├──────────────► SQL Analysis
         │
-        └──────────────► Jupyter Analysis
+        ├──────────────► Jupyter Analysis
+        │
+        └──────────────► Power BI Dashboard
 ```
 
 ## Key Results
@@ -116,10 +118,12 @@ The scraper collects catalogue and product-detail information including:
 * SQLite
 * CSV
 
-### Analysis
+### Analysis & Business Intelligence
 
 * Jupyter Notebook
 * SQL
+* Microsoft Power BI
+* DAX
 
 ### Development
 
@@ -150,6 +154,9 @@ Ecommerce-Web-Scraper-ETL/
 │   └── books_analysis.sql
 │
 ├── dashboard/
+│   ├── Ecommerce_Web_Scraper_ETL_Dashboard.pbip
+│   ├── Ecommerce_Web_Scraper_ETL_Dashboard.Report/
+│   └── Ecommerce_Web_Scraper_ETL_Dashboard.SemanticModel/
 │
 ├── requirements.txt
 └── .gitignore
@@ -173,8 +180,11 @@ The scraper is organized into reusable functions:
 
 ```python
 scrape_catalogue()
+
 scrape_product_details()
+
 create_dataframe()
+
 save_raw_data()
 ```
 
@@ -242,6 +252,81 @@ The SQL analysis covers:
 
 The Jupyter notebook provides additional exploratory analysis, including distributions, data-quality checks, category analysis, and relationships between price, rating, and inventory.
 
+## Power BI Dashboard
+
+The processed e-commerce dataset is also used to build an interactive **E-commerce Product Intelligence Dashboard in Microsoft Power BI**.
+
+The dashboard connects to:
+
+```text
+data/processed/books_detailed_clean.csv
+```
+
+and transforms the scraped catalogue data into an interactive business intelligence layer.
+
+### Dashboard Pages
+
+#### Catalogue Overview
+
+* Total products
+* Average price
+* Average rating
+* Average available stock
+* Products by category
+* Price distribution
+* Rating distribution
+* Stock status
+* Category-level pricing analysis
+
+#### Pricing & Product Analysis
+
+* Average price by category
+* Price distribution by product
+* Price vs. rating analysis
+* Price bands
+* Highest-priced products
+* Category pricing comparison
+
+#### Inventory & Availability
+
+* Total stock
+* Average stock
+* Low-stock products
+* Low-stock percentage
+* Stock by category
+* Low-stock products by category
+* Stock status distribution
+* Rating vs. average stock
+* Inventory detail table
+
+### Key Dashboard Metrics
+
+| Metric             |    Value |
+| ------------------ | -------: |
+| Total Products     |    1,000 |
+| Categories         |       50 |
+| Average Price      |   £35.07 |
+| Average Rating     | 2.92 / 5 |
+| Average Stock      |     8.59 |
+| Low-Stock Products |      420 |
+| Low-Stock Rate     |      42% |
+| Maximum Price      |   £59.99 |
+
+The dashboard demonstrates how scraped web data can move beyond extraction and storage into **interactive product, pricing, and inventory analysis**.
+
+### Power BI Project
+
+The Power BI report is stored as a `.pbip` project so that the dashboard structure and semantic model can be version-controlled alongside the ETL pipeline.
+
+```text
+dashboard/
+├── Ecommerce_Web_Scraper_ETL_Dashboard.pbip
+├── Ecommerce_Web_Scraper_ETL_Dashboard.Report/
+└── Ecommerce_Web_Scraper_ETL_Dashboard.SemanticModel/
+```
+
+Open the `.pbip` file in **Power BI Desktop** to explore the report.
+
 ## Example Insights
 
 A few findings from the dataset:
@@ -249,36 +334,38 @@ A few findings from the dataset:
 * **42% of books have 5 or fewer units available**, providing a useful inventory-risk view.
 * The average listed price is approximately **£35.07**, while the median is **£35.98**.
 * The average product rating is approximately **2.92/5**.
-* Price and rating have a very weak linear relationship in this dataset (correlation approximately **0.03**).
+* Price and rating have a very weak linear relationship in this dataset, with a correlation of approximately **0.03**.
 * There are **50 source categories** represented in the catalogue.
 
 Because Books to Scrape is a practice dataset, these findings should be treated as demonstrations of the analytical workflow rather than conclusions about the real-world publishing market.
 
 ## Running the Project
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/PatienceAnono/Ecommerce-Web-Scraper-ETL.git
+
 cd Ecommerce-Web-Scraper-ETL
 ```
 
-### 2. Create and activate a virtual environment
+### 2. Create and Activate a Virtual Environment
 
 On Windows:
 
 ```bash
 python -m venv venv
+
 source venv/Scripts/activate
 ```
 
-### 3. Install dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Run the scraper
+### 4. Run the Scraper
 
 ```bash
 python src/scraper.py
@@ -286,7 +373,7 @@ python src/scraper.py
 
 This extracts the catalogue and product-detail data and saves the raw dataset under `data/raw/`.
 
-### 5. Run the transformation
+### 5. Run the Transformation
 
 ```bash
 python src/transform.py
@@ -294,7 +381,7 @@ python src/transform.py
 
 This cleans, transforms, validates, and saves the processed dataset under `data/processed/`.
 
-### 6. Load the database
+### 6. Load the Database
 
 ```bash
 python src/load.py
@@ -302,7 +389,7 @@ python src/load.py
 
 This loads the processed dataset into SQLite and verifies the `books` table.
 
-### 7. Explore the analysis
+### 7. Explore the Analysis
 
 Open:
 
@@ -314,6 +401,20 @@ and review:
 
 ```text
 sql/books_analysis.sql
+```
+
+### 8. Explore the Power BI Dashboard
+
+Open the Power BI project in **Power BI Desktop**:
+
+```text
+dashboard/Ecommerce_Web_Scraper_ETL_Dashboard.pbip
+```
+
+The dashboard uses the processed dataset:
+
+```text
+data/processed/books_detailed_clean.csv
 ```
 
 ## Learning Objectives
@@ -331,12 +432,16 @@ This project was built to demonstrate practical skills in:
 * SQLite database loading
 * SQL analysis
 * Exploratory data analysis
+* Power BI dashboard development
+* DAX
 * Python project organization
 * Git and GitHub workflow
 
 ## Portfolio Relevance
 
-This project demonstrates how raw web data can be turned into a structured dataset that is ready for analysis and business reporting.
+This project demonstrates how raw web data can be transformed into a structured analytical asset through a complete workflow:
+
+**Web Scraping → Data Cleaning → Validation → ETL → SQLite → SQL → Exploratory Analysis → Power BI**
 
 It complements analytics projects focused on:
 
@@ -345,6 +450,8 @@ It complements analytics projects focused on:
 * Customer intelligence
 * Revenue analysis
 * Business dashboards
+
+The project demonstrates both **data engineering fundamentals** and the ability to turn extracted data into **business-facing analytical outputs**.
 
 ## Future Enhancements
 
@@ -357,9 +464,8 @@ Potential future improvements include:
 * Database indexing
 * Automated tests
 * Pipeline orchestration
-* Power BI dashboard integration
 
-These enhancements are intentionally outside the current scope so the core scraping and ETL workflow remains clear and easy to understand.
+These enhancements are intentionally outside the current scope so the core scraping, ETL, and analytics workflow remains clear and easy to understand.
 
 ## Author
 
