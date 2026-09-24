@@ -1,135 +1,161 @@
 # E-commerce Web Scraper & ETL Pipeline
 
-An end-to-end data engineering and analytics portfolio project that extracts product data from an e-commerce website, transforms and validates the dataset, stores it in SQLite, and prepares it for SQL analysis, exploratory analysis, and interactive business intelligence reporting.
+An end-to-end **data engineering and analytics pipeline** that extracts e-commerce product data, transforms and validates the dataset, loads it into SQLite, and prepares it for **SQL analysis, exploratory analysis, and Power BI business intelligence reporting**.
 
-> **Source:** 
->
-> [Books to Scrape](https://books.toscrape.com/) — a practice e-commerce website designed for web scraping.
+### What This Project Demonstrates
+
+- **Web scraping:** Python, Requests, BeautifulSoup, pagination, and product-detail extraction
+- **ETL development:** structured Extract → Transform → Load workflow
+- **Data transformation:** Pandas, data cleaning, type conversion, validation, and quality checks
+- **Data storage:** SQLite database and structured CSV outputs
+- **SQL analytics:** business-focused queries for pricing, ratings, inventory, and product analysis
+- **Exploratory analysis:** Jupyter Notebook and Python
+- **Business intelligence:** Power BI dashboard built from the processed dataset
+- **Portfolio-ready engineering:** modular Python scripts, reproducible outputs, Git/GitHub version control
+
+### Project Scale
+
+| Metric | Result |
+|---|---:|
+| Catalogue pages scraped | 50 |
+| Products collected | 1,000 |
+| Fields per product | 16 |
+| Product categories | 50 |
+| Raw data | CSV |
+| Processed data | CSV |
+| Database | SQLite |
+| BI reporting | Power BI |
+
+### Data Source
+
+**Books to Scrape** — a practice e-commerce website designed for web scraping.
+
+[Books to Scrape](https://books.toscrape.com/)
 
 ## Project Overview
 
-This project demonstrates a practical **Extract, Transform, Load (ETL)** workflow using Python.
-
-The pipeline collects product and product-detail information from 50 catalogue pages, producing a dataset of **1,000 books and 16 fields per product**.
-
-### Workflow
+The pipeline follows a modular **Extract → Transform → Load** architecture:
 
 ```text
-Books to Scrape
-       │
-       ▼
-┌───────────────┐
-│    EXTRACT    │
-│  Python +     │
-│  Requests +   │
-│ BeautifulSoup │
-└───────┬───────┘
-        │
-        ▼
-   Raw CSV Dataset
-        │
-        ▼
-┌───────────────┐
-│   TRANSFORM   │
-│    Pandas     │
-│ Cleaning +    │
-│ Type Casting  │
-└───────┬───────┘
-        │
-        ▼
-  Clean CSV Dataset
-        │
-        ▼
-┌───────────────┐
-│     LOAD      │
-│    SQLite     │
-└───────┬───────┘
-        │
-        ▼
-     books.db
-        │
-        ├──────────────► SQL Analysis
-        │
-        ├──────────────► Jupyter Analysis
-        │
-        └──────────────► Power BI Dashboard
-```
+                 BOOKS TO SCRAPE
+                       │
+                       ▼
+              ┌─────────────────┐
+              │     EXTRACT     │
+              │                 │
+              │ Python          │
+              │ Requests        │
+              │ BeautifulSoup   │
+              │ Pagination      │
+              └────────┬────────┘
+                       │
+                       ▼
+                  RAW CSV DATA
+                       │
+                       ▼
+              ┌─────────────────┐
+              │    TRANSFORM    │
+              │                 │
+              │ Pandas          │
+              │ Cleaning        │
+              │ Type Conversion │
+              │ Validation      │
+              └────────┬────────┘
+                       │
+                       ▼
+               PROCESSED CSV
+                       │
+                       ▼
+              ┌─────────────────┐
+              │      LOAD       │
+              │                 │
+              │ SQLite          │
+              └────────┬────────┘
+                       │
+                       ▼
+                   BOOKS.DB
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+      SQL Analysis  Jupyter      Power BI
+                   Analysis      Dashboard
+## Key Results & Data Quality
 
-## Key Results
+The completed pipeline produced a validated dataset of **1,000 products across 50 catalogue pages and 50 categories**.
 
-| Metric                  |    Result |
-| ----------------------- | --------: |
-| Catalogue pages scraped |        50 |
-| Products extracted      |     1,000 |
-| Fields per product      |        16 |
-| Categories              |        50 |
-| Average price           |    £35.07 |
-| Median price            |    £35.98 |
-| Average rating          |  2.92 / 5 |
-| Average available stock |      8.59 |
+| Metric | Result |
+|---|---:|
+| Catalogue pages scraped | 50 |
+| Products extracted | 1,000 |
+| Fields per product | 16 |
+| Categories | 50 |
+| Average price | £35.07 |
+| Median price | £35.98 |
+| Average rating | 2.92 / 5 |
+| Average available stock | 8.59 |
 | Low-stock products (≤5) | 420 (42%) |
-| Duplicate product URLs  |         0 |
-| Invalid ratings         |         0 |
-| Invalid prices          |         0 |
-| Missing descriptions    |         2 |
+| Duplicate product URLs | 0 |
+| Invalid ratings | 0 |
+| Invalid prices | 0 |
+| Missing descriptions | 2 |
 
-The two missing descriptions originate from source product pages where a description was not available.
+### Data Quality Checks
+
+The transformation stage validates the dataset for:
+
+- Duplicate products and product URLs
+- Missing values
+- Invalid price values
+- Invalid rating values
+- Numeric inventory and review counts
+- Correct data types
+- Timestamp conversion
+- Consistent product records
+
+The final dataset contains **no duplicate product URLs, invalid ratings, or invalid prices**.
+
+The two missing descriptions originate from source product pages where a description was not available. They were retained rather than artificially populated, preserving the source data accurately.
 
 ## Data Collected
 
-The scraper collects catalogue and product-detail information including:
+The scraper collects both catalogue-level and product-detail information:
 
-* Product title
-* Price
-* Availability
-* Rating
-* Product URL
-* UPC
-* Product type
-* Price excluding tax
-* Price including tax
-* Tax
-* Availability count
-* Number of reviews
-* Category
-* Product description
-* Image URL
-* Scrape timestamp
+- Product title
+- Price
+- Availability
+- Rating
+- Product URL
+- UPC
+- Product type
+- Price excluding tax
+- Price including tax
+- Tax
+- Availability count
+- Number of reviews
+- Category
+- Product description
+- Image URL
+- Scrape timestamp
 
 ## Tech Stack
 
-### Web Scraping
+| Area | Technologies |
+|---|---|
+| Web Scraping | Python, Requests, BeautifulSoup, urllib.parse, Regular Expressions |
+| Data Processing | Pandas, data cleaning, type conversion, validation |
+| Storage | CSV, SQLite |
+| Analysis | SQL, Jupyter Notebook, Python |
+| Business Intelligence | Microsoft Power BI, DAX |
+| Development | Git, GitHub, VS Code |
 
-* Python
-* Requests
-* BeautifulSoup
-* URL parsing with `urllib.parse`
-* Regular expressions
+### Core Python Components
 
-### Data Processing
-
-* Pandas
-* Data cleaning
-* Data type conversion
-* Data validation
-
-### Storage
-
-* SQLite
-* CSV
-
-### Analysis & Business Intelligence
-
-* Jupyter Notebook
-* SQL
-* Microsoft Power BI
-* DAX
-
-### Development
-
-* Git
-* GitHub
-* VS Code
+- `requests` for HTTP requests
+- `BeautifulSoup` for HTML parsing
+- `pandas` for transformation and validation
+- `urllib.parse` for URL handling
+- `re` for pattern extraction
+- `sqlite3` for database loading
 
 ## Project Structure
 
@@ -345,15 +371,32 @@ Open the `.pbip` file in **Power BI Desktop** to explore the report.
 
 ## Example Insights
 
-A few findings from the dataset:
+The completed dataset provides several useful analytical observations:
 
-* **42% of books have 5 or fewer units available**, providing a useful inventory-risk view.
-* The average listed price is approximately **£35.07**, while the median is **£35.98**.
-* The average product rating is approximately **2.92/5**.
-* Price and rating have a very weak linear relationship in this dataset, with a correlation of approximately **0.03**.
-* There are **50 source categories** represented in the catalogue.
+### Inventory
 
-Because Books to Scrape is a practice dataset, these findings should be treated as demonstrations of the analytical workflow rather than conclusions about the real-world publishing market.
+- **420 products (42%) have 5 or fewer units available**, providing a simple inventory-risk indicator that can be explored by category and stock status.
+
+### Pricing
+
+- The **average listed price is £35.07**, while the **median price is £35.98**.
+- The relatively close mean and median indicate that the overall price distribution is not being heavily shifted by a small number of extreme prices.
+- The highest listed price in the dataset is **£59.99**.
+
+### Ratings
+
+- The **average product rating is 2.92 / 5**, providing a baseline for comparing product ratings across categories and price bands.
+
+### Price & Rating Relationship
+
+- Price and rating show a **very weak linear relationship**, with a Pearson correlation of approximately **0.03**.
+- Within this dataset, higher-priced books therefore do not show a meaningful linear association with higher ratings.
+
+### Catalogue Structure
+
+- The catalogue contains **1,000 products across 50 categories**, allowing pricing, ratings, and inventory levels to be compared at category level.
+
+> **Note:** Books to Scrape is a practice website created for web-scraping exercises. These findings demonstrate the analytical workflow and should not be interpreted as conclusions about the broader publishing market.
 
 ## Running the Project
 
@@ -455,19 +498,32 @@ This project was built to demonstrate practical skills in:
 
 ## Portfolio Relevance
 
-This project demonstrates how raw web data can be transformed into a structured analytical asset through a complete workflow:
+This project demonstrates the ability to take **raw, unstructured web data and turn it into a reliable analytical dataset and business intelligence asset**.
 
-**Web Scraping → Data Cleaning → Validation → ETL → SQLite → SQL → Exploratory Analysis → Power BI**
+The complete workflow is:
 
-It complements analytics projects focused on:
+**Web Scraping → Data Cleaning → Validation → ETL → SQLite → SQL Analysis → Exploratory Analysis → Power BI**
 
-* E-commerce performance
-* Marketing analytics
-* Customer intelligence
-* Revenue analysis
-* Business dashboards
+From a data analytics perspective, the project demonstrates:
 
-The project demonstrates both **data engineering fundamentals** and the ability to turn extracted data into **business-facing analytical outputs**.
+- **Data acquisition** — extracting structured information from web pages and handling multi-page catalogues
+- **Data preparation** — cleaning, transforming, validating, and standardizing raw data
+- **Data quality** — identifying missing values, duplicates, invalid values, and data-type issues
+- **Data engineering fundamentals** — separating extraction, transformation, and loading into modular Python components
+- **Database skills** — loading structured data into SQLite for persistent querying
+- **SQL analysis** — translating a raw dataset into analytical questions around pricing, inventory, ratings, and categories
+- **Business intelligence** — presenting analytical findings through an interactive Power BI dashboard
+- **Reproducibility** — organizing code, data outputs, analysis, and dashboard assets in a version-controlled GitHub repository
+
+The project complements my broader analytics portfolio across:
+
+- E-commerce performance
+- Marketing analytics
+- Customer intelligence
+- Revenue analysis
+- Business intelligence and reporting
+
+Together, these projects demonstrate a broader workflow from **data collection and preparation through analysis, visualization, and business insight**.
 
 ## Future Enhancements
 
