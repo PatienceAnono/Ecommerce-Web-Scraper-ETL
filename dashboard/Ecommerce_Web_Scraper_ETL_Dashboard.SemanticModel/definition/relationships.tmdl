@@ -1,0 +1,5 @@
+relationship 41d26361-362b-4e4b-b9b0-38accc9c2d1c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: books.scraped_at
+	toColumn: LocalDateTable_3706de3e-5b6c-4088-b173-79eea055d9bb.Date
+

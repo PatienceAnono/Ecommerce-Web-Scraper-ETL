@@ -1,0 +1,287 @@
+table books
+	lineageTag: 4138013f-0342-4bd2-9a7b-1ee05bcc8b6e
+
+	measure 'Total Products' = COUNTROWS(books)
+		formatString: #,##0
+		displayFolder: Core Metrics
+		lineageTag: 1424e842-2c46-4d64-b2cf-c9add7e96ef1
+
+	measure 'Average Price' = AVERAGE(books[price])
+		formatString: £#,##0.00
+		displayFolder: Core Metrics
+		lineageTag: cca50642-51b6-4922-98a1-97a8317906fa
+
+	measure 'Average Rating' = AVERAGE(books[rating])
+		formatString: 0.00
+		displayFolder: Core Metrics
+		lineageTag: 0b56c4df-f4c1-4b08-96b8-d1270c34fa29
+
+	measure 'Average Stock' = AVERAGE(books[availability_count])
+		formatString: 0.00
+		displayFolder: Core Metrics
+		lineageTag: c738e01b-d01b-4933-9745-7f1af165e2f8
+
+	measure 'Total Stock' = SUM(books[availability_count])
+		formatString: #,##0
+		displayFolder: Core Metrics
+		lineageTag: 40276b9b-81ba-4ce5-a4ee-cf06cd3aac46
+
+	measure 'Low Stock Products' =
+			CALCULATE(
+			    COUNTROWS(books),
+			    books[availability_count] <= 5
+			)
+		formatString: #,##0
+		displayFolder: Inventory
+		lineageTag: 1aa2ac2c-834d-4120-825c-7f66a45bb447
+
+	measure 'Low Stock %' =
+			DIVIDE(
+			    [Low Stock Products],
+			    [Total Products]
+			)
+		formatString: 0%
+		displayFolder: Inventory
+		lineageTag: fe4c4b1e-0de6-44b3-b764-b6f8c68a0a08
+
+	measure 'Average Price Incl Tax' = AVERAGE(books[price_incl_tax])
+		formatString: £#,##0.00
+		displayFolder: Pricing
+		lineageTag: 426a0463-499e-4bf3-9b42-6118988162cb
+
+	measure 'Average Price Excl Tax' = AVERAGE(books[price_excl_tax])
+		formatString: £#,##0.00
+		displayFolder: Pricing
+		lineageTag: b4088221-e9c5-47c5-8084-747b6e036e40
+
+	measure 'Total Categories' = DISTINCTCOUNT(books[category])
+		formatString: #,##0
+		displayFolder: Core Metrics
+		lineageTag: 773a225b-8cb4-4c68-8710-6b65a6bcee71
+
+	measure 'Five Star Products' =
+			CALCULATE(
+			    COUNTROWS(books),
+			    books[rating] = 5
+			)
+		formatString: #,##0
+		displayFolder: Ratings
+		lineageTag: f84e815b-f89c-4edd-ad4c-f01d7659741b
+
+	measure 'One Star Products' =
+			CALCULATE(
+			    COUNTROWS(books),
+			    books[rating] = 1
+			)
+		formatString: #,##0
+		displayFolder: Ratings
+		lineageTag: 223a8377-1df4-4190-8d5c-c42b1c97f110
+
+	measure 'Highest Price' = MAX(books[price])
+		formatString: £#,##0.00
+		displayFolder: Pricing
+		lineageTag: 8dfa3ff7-4b9e-4797-8cca-d81d462d618c
+
+	column title
+		dataType: string
+		lineageTag: d9f2c80c-12f0-4f62-be45-0997f0d4b31a
+		summarizeBy: none
+		sourceColumn: title
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		formatString: £#,##0.00
+		lineageTag: 3c123988-215f-42fe-b4b4-d664fa9d9731
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column availability
+		dataType: string
+		lineageTag: 6b64ff0b-437e-4e85-b0e2-09932fbba376
+		summarizeBy: none
+		sourceColumn: availability
+
+		annotation SummarizationSetBy = Automatic
+
+	column rating
+		dataType: int64
+		formatString: 0
+		lineageTag: e9b2cbe4-c14b-47df-ba42-9d88eacecc54
+		summarizeBy: sum
+		sourceColumn: rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_url
+		dataType: string
+		lineageTag: 5dd90805-5d6d-469f-9db4-bc3784046f29
+		summarizeBy: none
+		sourceColumn: product_url
+
+		annotation SummarizationSetBy = Automatic
+
+	column upc
+		dataType: string
+		lineageTag: 48c64d44-7c52-4be1-8b92-2a8c65c03cc8
+		summarizeBy: none
+		sourceColumn: upc
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_type
+		dataType: string
+		lineageTag: 191a5e9c-c57a-4801-87a3-f8f1aa76db1a
+		summarizeBy: none
+		sourceColumn: product_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_excl_tax
+		dataType: double
+		formatString: £#,##0.00
+		lineageTag: 0cc59620-ef01-4046-9ffe-a327b32cf6e0
+		summarizeBy: sum
+		sourceColumn: price_excl_tax
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column price_incl_tax
+		dataType: double
+		formatString: £#,##0.00
+		lineageTag: aa1b999f-0605-47d0-accc-7a7206247e34
+		summarizeBy: sum
+		sourceColumn: price_incl_tax
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tax
+		dataType: double
+		formatString: £#,##0.00
+		lineageTag: 97fae834-24e6-4a75-81f6-236ac9e1fbbe
+		summarizeBy: sum
+		sourceColumn: tax
+
+		annotation SummarizationSetBy = Automatic
+
+	column availability_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 6acd1899-7129-4fed-ae62-1a59f60708ac
+		summarizeBy: sum
+		sourceColumn: availability_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column number_of_reviews
+		dataType: int64
+		formatString: 0
+		lineageTag: 474ad2d5-9a47-4d08-92cf-d072d33f99e8
+		summarizeBy: sum
+		sourceColumn: number_of_reviews
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 0dbdb3ec-b70e-4852-af06-68615623c810
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: bccb0d68-6ec6-4b01-9ed0-84f09956533a
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	column image_url
+		dataType: string
+		lineageTag: f5b086e6-9998-425b-a278-243c74c28e16
+		summarizeBy: none
+		sourceColumn: image_url
+
+		annotation SummarizationSetBy = Automatic
+
+	column scraped_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7a2518ff-c1d1-4edf-8d45-4d6717522185
+		summarizeBy: none
+		sourceColumn: scraped_at
+
+		variation Variation
+			isDefault
+			relationship: 41d26361-362b-4e4b-b9b0-38accc9c2d1c
+			defaultHierarchy: LocalDateTable_3706de3e-5b6c-4088-b173-79eea055d9bb.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price Band' =
+			SWITCH(
+			    TRUE(),
+			    books[price] < 20, "Under £20",
+			    books[price] < 40, "£20–£39.99",
+			    books[price] < 50, "£40–£49.99",
+			    "£50+"
+			)
+		dataType: string
+		displayFolder: Attributes
+		lineageTag: 0a077783-c7e1-45d6-8f9c-984e669f377e
+		sortByColumn: 'Price Band Sort'
+
+	column 'Stock Status' =
+			SWITCH(
+			    TRUE(),
+			    books[availability_count] <= 5, "Low Stock",
+			    books[availability_count] <= 10, "Moderate Stock",
+			    "Healthy Stock"
+			)
+		dataType: string
+		displayFolder: Attributes
+		lineageTag: d7e01ec9-b5c7-4487-a0b0-0db5c6c672d4
+
+	column 'Rating Label' = FORMAT(books[rating], "0") & " Stars"
+		dataType: string
+		displayFolder: Attributes
+		lineageTag: 9d4d4cd4-629e-4c62-a3e8-412e3f7a73fd
+
+	column 'Price Band Sort' =
+			SWITCH(
+			    TRUE(),
+			    books[price] < 20, 1,
+			    books[price] < 40, 2,
+			    books[price] < 50, 3,
+			    4
+			)
+		dataType: int64
+		isHidden
+		displayFolder: Attributes
+		lineageTag: 0a696e33-70da-40a0-8d1e-8f497f557854
+
+	partition books = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Patience\Documents\GITHUB\Ecommerce-Web-Scraper-ETL\data\processed\books_detailed_clean.csv"),[Delimiter=",", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"title", type text}, {"price", type number}, {"availability", type text}, {"rating", Int64.Type}, {"product_url", type text}, {"upc", type text}, {"product_type", type text}, {"price_excl_tax", type number}, {"price_incl_tax", type number}, {"tax", type number}, {"availability_count", Int64.Type}, {"number_of_reviews", Int64.Type}, {"category", type text}, {"description", type text}, {"image_url", type text}, {"scraped_at", type datetime}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

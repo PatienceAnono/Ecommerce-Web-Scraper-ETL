@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Ecommerce_Web_Scraper_ETL_Dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "20708cea-5524-47d3-9c00-73096fa08f30"
+  }
+}

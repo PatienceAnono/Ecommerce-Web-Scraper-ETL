@@ -33,3 +33,5 @@ Thumbs.db
 data/raw/
 data/processed/
 data/*.db
+# Power BI local/cache files
+**/.pbi/
